@@ -12,5 +12,28 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+
+	$tasks = DB::table('task')->latest()->get();
+	
+	//return $tasks;
+
+    return view('welcome', compact('tasks'));
+
 });
+
+
+Route::get('/task/{id}', function ($id) {
+//		dd($id);
+
+	$task = DB::table('task')->find($id);
+	
+	//dd($task);
+
+    return view('task.show', compact('task'));
+
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
